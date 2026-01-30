@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond Meat: Estrategia Basada en Datos | Reporte Ejecutivo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Markdown Parser for AI responses -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0fdf4; /* Light Green Tint */
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #dcfce7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #15803d;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #14532d;
+        }
+        /* AI Response Styling */
+        .ai-response p { margin-bottom: 0.5rem; }
+        .ai-response ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 0.5rem; }
+        .ai-response strong { color: #34d399; }
+        
+        .loading-dots:after {
+            content: ' .';
+            animation: dots 1s steps(5, end) infinite;
+        }
+        @keyframes dots {
+            0%, 20% { color: rgba(0,0,0,0); text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0);} 
+            40% { color: white; text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0);} 
+            60% { text-shadow: .25em 0 0 white, .5em 0 0 rgba(0,0,0,0);} 
+            80%, 100% { text-shadow: .25em 0 0 white, .5em 0 0 white;} 
+        }
+    </style>
+    <!-- Vibrant Palette Configuration: Emerald (Growth/Plant) & Rose (Risk/Meat) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-green': '#10b981', // Emerald 500
+                        'brand-dark': '#064e3b',  // Emerald 900
+                        'brand-accent': '#f43f5e', // Rose 500
+                        'brand-light': '#ecfdf5', // Emerald 50
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <!-- HERO SECTION -->
+    <header class="bg-brand-dark text-white pt-12 pb-20 px-6 relative overflow-hidden shadow-xl">
+        <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-brand-green rounded-full opacity-20 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-64 h-64 bg-brand-accent rounded-full opacity-20 blur-3xl"></div>
+        
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-emerald-700 pb-4">
+                <div>
+                    <span class="text-brand-green font-bold tracking-widest text-sm uppercase">Universidad San Francisco de Quito</span>
+                </div>
+                <div class="text-sm opacity-80 mt-2 md:mt-0">
+                    29/01/2026 | Matías Toro
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">
+                Beyond Meat:<br>
+                <span class="text-brand-green">Estrategia Basada en Datos</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-emerald-100 max-w-2xl font-light">
+                Escalar una Promesa <i>Customer-Centric</i> sin romper la operación.
+            </p>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT GRID -->
+    <main class="max-w-6xl mx-auto px-4 -mt-12 relative z-20 space-y-12 mb-20">
+
+        <!-- SECTION 1: DIAGNOSTICO ESTRATEGICO -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Card: The Core Problem -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 border-t-8 border-brand-accent transform hover:-translate-y-1 transition duration-300">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center">
+                    <span class="text-3xl mr-3">⚠️</span> El Problema Raíz
+                </h2>
+                <h3 class="text-xl font-bold text-brand-accent mb-2">Desconexión Operativa</h3>
+                <p class="text-slate-600 mb-6">
+                    Existe una desconexión crítica entre la valoración financiera y la realidad operativa. Beyond Meat ha fallado en asegurar la fiabilidad de sus proveedores, creando una fragilidad sistémica.
+                </p>
+                <div class="bg-rose-50 p-4 rounded-lg border border-rose-100 text-center">
+                    <p class="italic text-rose-800 font-medium text-lg">
+                        "Beyond Meat es un F1 🏎️ mientras que sus proveedores son un minivan 🚐."
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card: The Financial Reality (Charts) -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-lg font-bold text-slate-700 mb-4 border-b pb-2">Expectativa vs. Realidad (2018-2020 Est.)</h3>
+                
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="text-center p-4 bg-emerald-50 rounded-xl">
+                        <div class="text-sm text-emerald-800 font-semibold uppercase tracking-wide">Valoración</div>
+                        <div class="text-4xl font-extrabold text-brand-green">39x</div>
+                        <div class="text-xs text-emerald-600 mt-1">Ingresos Est. 2020</div>
+                    </div>
+                    <div class="text-center p-4 bg-rose-50 rounded-xl">
+                        <div class="text-sm text-rose-800 font-semibold uppercase tracking-wide">Margen Op.</div>
+                        <div class="text-4xl font-extrabold text-brand-accent">-31.8%</div>
+                        <div class="text-xs text-rose-600 mt-1">Realidad 2018</div>
+                    </div>
+                </div>
+                
+                <p class="text-sm text-slate-500 mt-2">
+                    <strong>Evidencia:</strong> Goldman Sachs advirtió sobre "cuellos de botella" en capacidad de empaquetado y materia prima.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION 2: CLIENTE Y MERCADO -->
+        <section class="bg-white rounded-2xl shadow-lg p-8 md:p-12 overflow-hidden relative">
+            <div class="absolute top-0 left-0 w-2 h-full bg-brand-green"></div>
+            
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-brand-dark mb-2">Cliente y Experiencia</h2>
+                <p class="text-slate-600">El riesgo de la innovación forzada sobre la empatía.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                
+                <!-- Chart Container: Customer Overlap -->
+                <div class="flex flex-col">
+                    <h3 class="text-lg font-bold text-slate-800 mb-2 text-center">Perfil del Consumidor (Overlap)</h3>
+                    <p class="text-sm text-slate-500 mb-4 text-center px-4">
+                        El 90% de los clientes de Beyond Meat también consumen proteína animal, exigiendo disponibilidad constante.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="customerOverlapChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Text Content & Risk -->
+                <div class="space-y-6">
+                    <div class="bg-slate-50 p-6 rounded-xl border-l-4 border-brand-accent">
+                        <h4 class="font-bold text-brand-accent mb-2">Riesgo de Lealtad</h4>
+                        <p class="text-slate-700 mb-3">
+                            Priorizar la fase de <strong>Idear</strong> sobre <strong>Empatizar</strong> (lanzando nuevas versiones cada año) aliena a los clientes leales.
+                        </p>
+                        <p class="text-sm italic text-slate-500">
+                            CEO Ethan Brown: "Habrá gente que se moleste y extrañe la versión anterior."
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-2">Dependencia del Producto Estrella</h4>
+                        <div class="w-full bg-gray-200 rounded-full h-6 mb-2 relative">
+                            <div class="bg-brand-green h-6 rounded-full flex items-center justify-end pr-3 text-white text-xs font-bold" style="width: 70%">70%</div>
+                        </div>
+                        <p class="text-xs text-slate-500">
+                            El 70% de los ingresos brutos provienen de <strong>Beyond Burger</strong>. Cambiar la receta sin validación es un riesgo sistémico.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: ESTRATEGIA DE DATOS -->
+        <section>
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-slate-800">Estrategia de Datos Propuesta</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto mt-2">Pasar de la intuición a la decisión basada en evidencia.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- North Star Metric -->
+                <div class="md:col-span-3 bg-brand-dark text-white rounded-2xl p-8 shadow-xl flex flex-col md:flex-row items-center justify-between">
+                    <div class="mb-6 md:mb-0 md:mr-8 text-center md:text-left">
+                        <div class="text-emerald-400 font-bold tracking-widest uppercase text-sm mb-2">North Star Metric (NSM)</div>
+                        <h3 class="text-3xl font-extrabold mb-2">Tasa de Retención de Consumidores Flexibles</h3>
+                        <p class="text-emerald-100 opacity-80">
+                            Valida que el producto se convierte en un hábito cultural frente a la proteína animal, superando la novedad tecnológica.
+                        </p>
+                    </div>
+                    <div class="text-6xl">🌟</div>
+                </div>
+
+                <!-- Product 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-blue-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-bold text-lg text-slate-800">Gestión de Contribuidores</h3>
+                        <span class="text-2xl">🏭</span>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-4">
+                        Herramienta de <strong>Gemelo Digital</strong> para prever cuellos de botella y gestionar activamente las dependencias de materia prima.
+                    </p>
+                    <ul class="text-sm text-slate-500 space-y-2">
+                        <li class="flex items-center">✅ Monitoreo de Capacidad</li>
+                        <li class="flex items-center">✅ Alerta de Riesgo Climático</li>
+                    </ul>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-purple-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-bold text-lg text-slate-800">Validación de Innovación</h3>
+                        <span class="text-2xl">🔬</span>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-4">
+                        Herramienta de testeo (A/B) que correlaciona pruebas de laboratorio con feedback real antes del lanzamiento masivo.
+                    </p>
+                    <ul class="text-sm text-slate-500 space-y-2">
+                        <li class="flex items-center">✅ Preferencia Sensorial</li>
+                        <li class="flex items-center">✅ Mitigación de Rechazo</li>
+                    </ul>
+                </div>
+
+                 <!-- Decisions to Avoid -->
+                 <div class="bg-rose-50 p-6 rounded-2xl shadow-md border-t-4 border-rose-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-bold text-lg text-rose-800">Decisión a Evitar</h3>
+                        <span class="text-2xl">🛑</span>
+                    </div>
+                    <p class="text-rose-900 font-semibold text-sm mb-2">
+                        NO reducir precios todavía.
+                    </p>
+                    <p class="text-rose-700 text-sm">
+                        Hacerlo con márgenes negativos (-31.8%) y sin resolver los cuellos de botella sería financieramente irresponsable.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- NEW SECTION: AI TOOLS (GEMINI POWERED) -->
+        <section class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl shadow-2xl p-8 border border-emerald-500/30 relative overflow-hidden">
+            <!-- Background FX -->
+            <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-brand-accent/10 rounded-full blur-3xl -ml-10 -mb-10"></div>
+            
+            <div class="relative z-10">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold flex items-center gap-3">
+                        <span class="text-4xl">🤖</span> Asistente Estratégico IA <span class="text-xs bg-emerald-500 text-white px-2 py-1 rounded-full uppercase tracking-wider font-bold">Powered by Matías Toro</span>
+                    </h2>
+                    <p class="text-emerald-200/70 text-sm mt-2 md:mt-0">Interactúa con el caso Beyond Meat en tiempo real</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Feature 1: Crisis Simulator -->
+                    <div class="bg-white/5 p-6 rounded-xl border border-white/10 hover:border-emerald-500/50 transition-all duration-300 flex flex-col">
+                        <div class="mb-4">
+                            <h3 class="text-xl font-bold text-emerald-400 mb-1 flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                                Simulador de Escenarios
+                            </h3>
+                            <p class="text-sm text-gray-300">Analiza el impacto inmediato de eventos críticos.</p>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <button onclick="simulateScenario('Fallo en Suministro de Guisantes')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-medium transition border border-slate-600">📉 Fallo Suministro</button>
+                            <button onclick="simulateScenario('Guerra de Precios con Tyson')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-medium transition border border-slate-600">⚔️ Guerra Precios</button>
+                            <button onclick="simulateScenario('Rechazo del Cliente a Versión 3.0')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-medium transition border border-slate-600">🤢 Rechazo Sabor</button>
+                        </div>
+
+                        <div id="simulationOutput" class="flex-grow bg-slate-900/50 rounded-lg p-4 text-sm text-gray-300 border border-white/5 min-h-[120px] max-h-[200px] overflow-y-auto">
+                            <span class="opacity-50 italic">Selecciona un escenario arriba para ver la predicción de la IA...</span>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2: Q&A Consultant -->
+                    <div class="bg-white/5 p-6 rounded-xl border border-white/10 hover:border-emerald-500/50 transition-all duration-300 flex flex-col">
+                        <div class="mb-4">
+                            <h3 class="text-xl font-bold text-emerald-400 mb-1 flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+                                Consultor Ejecutivo
+                            </h3>
+                            <p class="text-sm text-gray-300">Haz preguntas estratégicas sobre el reporte.</p>
+                        </div>
+                        
+                        <div class="flex gap-2 mb-4">
+                            <input type="text" id="consultantInput" placeholder="Ej: ¿Por qué no bajar precios hoy?" class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-emerald-500 transition">
+                            <button onclick="askConsultant()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg transition font-bold text-sm flex items-center gap-2">
+                                <span class="hidden md:inline">Preguntar</span> ✨
+                            </button>
+                        </div>
+
+                        <div id="consultantOutput" class="flex-grow bg-slate-900/50 rounded-lg p-4 text-sm text-gray-300 border border-white/5 min-h-[120px] max-h-[200px] overflow-y-auto">
+                            <span class="opacity-50 italic">Escribe tu pregunta para recibir asesoramiento...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: PLAN DE ACCION (90 DIAS) -->
+        <section class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-brand-dark mb-8 border-b pb-4">Plan de Acción: Próximos 90 Días</h2>
+            
+            <div class="relative">
+                <!-- Vertical Line -->
+                <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-emerald-100"></div>
+
+                <!-- Step 1 -->
+                <div class="flex flex-col md:flex-row items-center justify-between mb-8 relative z-10">
+                    <div class="w-full md:w-5/12 bg-emerald-50 p-6 rounded-xl border border-emerald-200 text-right order-2 md:order-1">
+                        <h4 class="font-bold text-brand-dark text-lg">Días 1-30: Diversificación</h4>
+                        <p class="text-slate-600 text-sm">
+                            Diversificar proveedores de proteína de guisante para reducir el riesgo de paralización por desastres en una sola planta.
+                        </p>
+                    </div>
+                    <div class="w-12 h-12 bg-brand-green rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg my-4 md:my-0 order-1 md:order-2">1</div>
+                    <div class="w-full md:w-5/12 order-3"></div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex flex-col md:flex-row items-center justify-between mb-8 relative z-10">
+                    <div class="w-full md:w-5/12 order-2 md:order-1"></div>
+                    <div class="w-12 h-12 bg-brand-green rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg my-4 md:my-0 order-1 md:order-2">2</div>
+                    <div class="w-full md:w-5/12 bg-emerald-50 p-6 rounded-xl border border-emerald-200 text-left order-3 md:order-3">
+                        <h4 class="font-bold text-brand-dark text-lg">Días 31-60: Inversión Tecnológica</h4>
+                        <p class="text-slate-600 text-sm">
+                            Dirigir una parte de las utilidades a la inversión en tecnología para los proveedores principales (Stakeholders Externos).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex flex-col md:flex-row items-center justify-between relative z-10">
+                    <div class="w-full md:w-5/12 bg-emerald-50 p-6 rounded-xl border border-emerald-200 text-right order-2 md:order-1">
+                        <h4 class="font-bold text-brand-dark text-lg">Días 61-90: Validación Rigurosa</h4>
+                        <p class="text-slate-600 text-sm">
+                            Frenar lanzamientos masivos. Implementar sistema estadístico en público controlado (estilo Uber) para evitar pérdidas económicas.
+                        </p>
+                    </div>
+                    <div class="w-12 h-12 bg-brand-green rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg my-4 md:my-0 order-1 md:order-2">3</div>
+                    <div class="w-full md:w-5/12 order-3"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONCLUSION -->
+        <footer class="bg-slate-800 text-emerald-50 p-8 rounded-2xl text-center shadow-2xl border-t-4 border-brand-green">
+            <h2 class="text-2xl font-bold mb-4">Síntesis Estratégica</h2>
+            <p class="max-w-3xl mx-auto text-lg leading-relaxed opacity-90">
+                Para construir un camino real hacia la rentabilidad, Beyond Meat debe utilizar herramientas de análisis de datos que alineen su operación interna con lo que sus clientes valoran. <span class="text-brand-green font-bold">La eficiencia y la repetición de compra</span> deben ser los verdaderos motores de dinero a largo plazo, no la expansión ciega.
+            </p>
+        </footer>
+
+    </main>
+
+    <!-- SCRIPTS FOR CHARTS & AI -->
+    <script>
+        // --- GEMINI API CONFIGURATION & LOGIC ---
+        const apiKey = ""; // SYSTEM: API Key injected by environment
+
+        // Report Context for the AI
+        const reportContext = `
+        Eres un experto estratega de negocios analizando el caso Beyond Meat para un reporte ejecutivo de la Universidad San Francisco de Quito (Matías Toro, 2026).
+        
+        DATOS CLAVE DEL REPORTE:
+        1. Problema Raíz: Desconexión Operativa. Beyond Meat es un "F1" (valoración 39x ingresos) pero sus proveedores son un "minivan" (margen operativo -31.8%). Riesgo sistémico por falta de fiabilidad de proveedores.
+        2. Mercado: 90% de clientes son "flexitarianos" (comen carne también). Exigen disponibilidad constante.
+        3. Riesgos Cliente: La innovación forzada sobre la empatía.
+        4. Estrategia de Datos Propuesta:
+           - North Star Metric: Tasa de Retención de Consumidores Flexibles.
+           - Producto de Data 1: Gemelo Digital para gestión de contribuidores (proveedores).
+           - Producto de Data 2: Herramienta de testeo A/B para validar innovación antes de lanzamiento.
+        5. Plan de Acción 90 días: 
+           - Diversificar proveedores (evitar riesgo planta única).
+           - Inversión tecnológica en proveedores.
+           - Validación rigurosa (frenar lanzamientos masivos sin datos).
+        6. Decisión a Evitar: NO bajar precios todavía. 
+        `;
+
+        async function callGemini(userPrompt) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{
+                    parts: [{
+                        text: `Contexto del Reporte: ${reportContext}\n\nPregunta del Usuario: ${userPrompt}\n\nResponde como el consultor experto de este reporte en español.`
+                    }]
+                }]
+            };
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error('Error en la API');
+                
+                const data = await response.json();
+                return data.candidates[0].content.parts[0].text;
+            } catch (error) {
+                console.error("Error:", error);
+                return "⚠️ Lo siento, hubo un error de conexión con la IA. Por favor intenta de nuevo.";
+            }
+        }
+
+        // Feature 1: Simulator Logic
+        async function simulateScenario(scenario) {
+            const outputDiv = document.getElementById('simulationOutput');
+            outputDiv.innerHTML = `<div class=\"text-emerald-400 font-bold loading-dots\">Simulando escenario: ${scenario}</div>`;
+            
+            const prompt = `Simula el escenario: \"${scenario}\".`;
+            
+            const result = await callGemini(prompt);
+            outputDiv.innerHTML = `<div class=\"ai-response font-light\">${marked.parse(result)}</div>`;
+        }
+
+        // Feature 2: Consultant Logic
+        async function askConsultant() {
+            const input = document.getElementById('consultantInput');
+            const outputDiv = document.getElementById('consultantOutput');
+            const question = input.value.trim();
+            
+            if (!question) return;
+
+            outputDiv.innerHTML = `<div class=\"text-emerald-400 font-bold loading-dots\">Analizando estrategia</div>`;
+            
+            const result = await callGemini(question);
+            outputDiv.innerHTML = `<div class=\"ai-response font-light\">${marked.parse(result)}</div>`;
+        }
+        
+        // Allow Enter key for consultant
+        document.getElementById('consultantInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                askConsultant();
+            }
+        });
+
+        // --- UTILITY: Label Wrapping Logic (Mandatory) ---
+        function wrapLabels(labels, maxChars) {
+            return labels.map(label => {
+                if (label.length <= maxChars) return label;
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = words[0];
+
+                for (let i = 1; i < words.length; i++) {
+                    if ((currentLine + " " + words[i]).length <= maxChars) {
+                        currentLine += " " + words[i];
+                    } else {
+                        lines.push(currentLine);
+                        currentLine = words[i];
+                    }
+                }
+                lines.push(currentLine);
+                return lines;
+            });
+        }
+
+        // --- Common Chart Options ---
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    backgroundColor: 'rgba(6, 78, 59, 0.9)', // Emerald 900
+                    titleColor: '#ecfdf5',
+                    bodyColor: '#fff',
+                    padding: 12,
+                    callbacks: {
+                        // MANDATORY TOOLTIP CONFIGURATION
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            } else {
+                                return label;
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: { family: "'Roboto', sans-serif", size: 12 },
+                        color: '#334155'
+                    }
+                }
+            }
+        };
+
+        // --- CHART 1: Customer Overlap (Doughnut) ---
+        const ctxOverlap = document.getElementById('customerOverlapChart').getContext('2d');
+        const overlapLabels = ['Consumidores Flexibles (Compran Carne)', 'Vegetarianos/Veganos Estrictos'];
+        const processedOverlapLabels = wrapLabels(overlapLabels, 20);
+
+        new Chart(ctxOverlap, {
+            type: 'doughnut',
+            data: {
+                labels: processedOverlapLabels,
+                datasets: [{
+                    data: [90, 10],
+                    backgroundColor: [
+                        '#10b981', // Emerald 500 (Flexibles - The Target)
+                        '#34d399'  // Emerald 400 (Vegans)
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                ...commonOptions,
+                cutout: '65%',
+                plugins: {
+                    ...commonOptions.plugins,
+                    legend: { display: true, position: 'bottom' }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
